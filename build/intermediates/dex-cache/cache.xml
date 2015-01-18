@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/rohen/AndroidStudioProjects/SimpleTodo/app/libs/commons-io-2.4.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="b1b6ea3b7e4aa4f492509a4952029cd8e48019ad">
+        <dex dex="/Users/rohen/AndroidStudioProjects/SimpleTodo/app/build/intermediates/pre-dexed/debug/commons-io-2.4-0eb34213737e5c31b47a591d7b32b31da17fd4d7.jar" />
+    </item>
+    <item
+        jar="/Users/rohen/AndroidStudioProjects/SimpleTodo/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="/Users/rohen/AndroidStudioProjects/SimpleTodo/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-53c10cfc836625448e37f45ca5b6727ebe608a9d.jar" />
+    </item>
+    <item
+        jar="/Users/rohen/AndroidStudioProjects/SimpleTodo/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="/Users/rohen/AndroidStudioProjects/SimpleTodo/app/build/intermediates/pre-dexed/debug/classes-c3576258392eed8b50295ed054e6eb34f92b5591.jar" />
+    </item>
+    <item
+        jar="/Users/rohen/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/21.0.3/support-annotations-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
+        <dex dex="/Users/rohen/AndroidStudioProjects/SimpleTodo/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-3bc19fffc74ffda12ee1329f7d32106ccfbc5319.jar" />
+    </item>
+    <item
+        jar="/Users/rohen/AndroidStudioProjects/SimpleTodo/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="/Users/rohen/AndroidStudioProjects/SimpleTodo/app/build/intermediates/pre-dexed/debug/classes-e8d0e707f6a29d4683c10a343a47476e30d3173a.jar" />
+    </item>
+
+</items>
