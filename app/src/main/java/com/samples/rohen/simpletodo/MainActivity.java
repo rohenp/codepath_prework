@@ -1,39 +1,80 @@
 package com.samples.rohen.simpletodo;
 
-import android.app.Activity;
-import android.content.Intent;
+import android.database.sqlite.SQLiteConstraintException;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import org.apache.commons.io.FileUtils;
-
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.ListIterator;
 
 
-public class MainActivity extends ActionBarActivity {
-    ArrayList<String> items;
-    ArrayAdapter<String> itemsAdapter;
+public class MainActivity extends ActionBarActivity implements
+        EditItemDialog.EditItemDialogListener{
+    ArrayList<TodoItem> todoItems;
+    ItemArrayAdapter todoItemsAdapter;
     ListView lvItems;
+    TodoItemDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        db = new TodoItemDatabase(this);
         lvItems = (ListView) findViewById(R.id.lvItems);
-        readItems();
-        itemsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
-        lvItems.setAdapter(itemsAdapter);
+        todoItems = new ArrayList<TodoItem>();
+        updateItems();
+        todoItemsAdapter = new ItemArrayAdapter(this, todoItems);
+        lvItems.setAdapter(todoItemsAdapter);
         setupListViewListener();
+    }
+
+    @Override
+    public void onFinishEditDialog(int itemId, String itemName, int itemPriority,
+                                   String itemDueDate) {
+        TodoItem todoItem = (TodoItem) db.getTodoItem(itemId);
+        todoItem.setName(itemName);
+        todoItem.setPriority(itemPriority);
+
+        if (itemDueDate != null && !itemDueDate.equals("")) {
+            try {
+                todoItem.setDateDue(itemDueDate);
+            } catch (Exception ex) {
+                showAlertDialog("Invalid date", "Date should be formatted 'DD/MM/YY'.");
+                return;
+            }
+
+            Date date = new Date();
+            int now = (int) (date.getTime() / 1000L);
+
+            if(todoItem.getTimeDue() <= now && todoItem.getTimeDue() > 0) {
+                todoItem.setPriority(0);
+            }
+        } else {
+            todoItem.setTimeDue(-1);
+        }
+
+        if(todoItem.getPriority() > 9 || todoItem.getPriority() < 0) {
+            showAlertDialog("Invalid priority",
+                    "Try using a priority between 0 and 9.");
+        } else {
+            try {
+                db.updateTodoItem(todoItem);
+                updateItems();
+                todoItemsAdapter.notifyDataSetChanged();
+            } catch (SQLiteConstraintException ex) {
+                showAlertDialog("Invalid todo name",
+                        "Try using a todo name that hasn't been taken.");
+            }
+        }
     }
 
     private void setupListViewListener() {
@@ -41,9 +82,9 @@ public class MainActivity extends ActionBarActivity {
                 new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapter, View item, int pos, long id) {
-                items.remove(pos);
-                itemsAdapter.notifyDataSetChanged();
-                writeItems();
+                db.deleteTodoItem(todoItems.get(pos));
+                updateItems();
+                todoItemsAdapter.notifyDataSetChanged();
                 return true;
             }
         });
@@ -52,59 +93,69 @@ public class MainActivity extends ActionBarActivity {
                 new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapter, View item, int pos, long id) {
-                String itemName = items.get(pos);
-                launchEditItemView(itemName, pos);
+                String itemName = todoItems.get(pos).getName();
+                TodoItem todoItem = (TodoItem) db.getTodoItemByName(itemName);
+
+                showEditItemDialog(todoItem);
             }
 
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // REQUEST_CODE is defined above
-        if (resultCode == RESULT_OK) {
-            // Extract name value from result extras
-            String itemName = data.getStringExtra("item_name");
-            int itemPos = data.getIntExtra("item_pos", 0);
-            items.set(itemPos, itemName);
-            itemsAdapter.notifyDataSetChanged();
-            writeItems();
+    private void showEditItemDialog(TodoItem todoItem) {
+        FragmentManager fm = getSupportFragmentManager();
+        EditItemDialog editItemDialog = EditItemDialog.newInstance(todoItem);
+        editItemDialog.show(fm, "fragment_edit_item");
+    }
+
+    private void showAlertDialog(String titleText, String messageText) {
+        FragmentManager fm = getSupportFragmentManager();
+        AlertDialog alertDialog = AlertDialog.newInstance(titleText, messageText);
+        alertDialog.show(fm, "fragment_alert");
+    }
+
+    private void updateItems() {
+        List<TodoItem> newTodoItems = db.getAllTodoItems();
+        ListIterator itr = newTodoItems.listIterator();
+        TodoItem currentItem;
+
+        todoItems.clear();
+
+        Date date = new Date();
+        long now = date.getTime() / 1000L;
+
+        while(itr.hasNext()) {
+            currentItem = (TodoItem) itr.next();
+
+            if(currentItem.getTimeDue() <= now && currentItem.getTimeDue() > 0) {
+                currentItem.setPriority(0);
+            }
+
+            db.updateTodoItem(currentItem);
         }
-    }
 
-    public void launchEditItemView(String itemName, int pos) {
-        Intent editItemView = new Intent(MainActivity.this, EditItemActivity.class);
-        editItemView.putExtra("item_name", itemName);
-        editItemView.putExtra("item_pos", pos);
-        startActivityForResult(editItemView, 0);
-    }
+        newTodoItems = db.getAllTodoItems();
+        itr = newTodoItems.listIterator();
 
-    private void readItems() {
-        File filesDir = getFilesDir();
-        File todoFile = new File(filesDir, "todo.txt");
-        try {
-            items = new ArrayList<String>(FileUtils.readLines(todoFile));
-        } catch (IOException e) {
-            items = new ArrayList<String>();
-        }
-    }
-
-    private void writeItems() {
-        File filesDir = getFilesDir();
-        File todoFile = new File(filesDir, "todo.txt");
-        try {
-            FileUtils.writeLines(todoFile, items);
-        } catch (IOException e) {
-            e.printStackTrace();
+        while(itr.hasNext()) {
+            currentItem = (TodoItem) itr.next();
+            todoItems.add(currentItem);
         }
     }
 
     public void onAddItem(View v) {
         EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
-        String itemText = etNewItem.getText().toString();
-        itemsAdapter.add(itemText);
-        etNewItem.setText("");
-        writeItems();
+        String itemName = etNewItem.getText().toString();
+
+        TodoItem todoItem = new TodoItem(itemName, 0, -1);
+        try {
+            db.addTodoItem(todoItem);
+            updateItems();
+            todoItemsAdapter.notifyDataSetChanged();
+            etNewItem.setText("");
+        } catch (SQLiteConstraintException e) {
+            showAlertDialog("Invalid todo name", "Try using a todo name that hasn't been taken.");
+        }
     }
 
     @Override

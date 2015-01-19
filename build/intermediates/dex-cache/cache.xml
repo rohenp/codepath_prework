@@ -23,6 +23,34 @@
         <dex dex="/Users/rohen/AndroidStudioProjects/SimpleTodo/app/build/intermediates/pre-dexed/debug/classes-c3576258392eed8b50295ed054e6eb34f92b5591.jar" />
     </item>
     <item
+        jar="/Users/rohen/Code/codepath_prework/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="/Users/rohen/Code/codepath_prework/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-9be49c1839f0b1a884889bc7813a0adb311a0ff8.jar" />
+    </item>
+    <item
+        jar="/Users/rohen/Code/codepath_prework/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="/Users/rohen/Code/codepath_prework/app/build/intermediates/pre-dexed/debug/classes-789addce866d7c4365a68ee8cce45aa0d60af98d.jar" />
+    </item>
+    <item
+        jar="/Users/rohen/Code/codepath_prework/app/libs/commons-io-2.4.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="b1b6ea3b7e4aa4f492509a4952029cd8e48019ad">
+        <dex dex="/Users/rohen/Code/codepath_prework/app/build/intermediates/pre-dexed/debug/commons-io-2.4-53c2ee055eaf9daec43a665c9c75e6de40dbd853.jar" />
+    </item>
+    <item
+        jar="/Users/rohen/Code/codepath_prework/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="/Users/rohen/Code/codepath_prework/app/build/intermediates/pre-dexed/debug/classes-90350f066de639fcf7eed3e1e8bbb6012aabd37a.jar" />
+    </item>
+    <item
         jar="/Users/rohen/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/21.0.3/support-annotations-21.0.3.jar"
         jumboMode="false"
         revision="21.1.2"

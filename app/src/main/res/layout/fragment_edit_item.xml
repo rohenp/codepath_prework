@@ -1,0 +1,58 @@
+<!-- fragment_edit_item.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/edit_name"
+    android:layout_width="wrap_content" android:layout_height="wrap_content"
+    android:layout_gravity="center" android:orientation="vertical"  >
+
+    <TextView
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="ToDo Name"
+        android:id="@+id/textView" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/itemNameField"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="114dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Priority (0-9)"
+        android:id="@+id/textView2" />
+
+    <EditText
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/itemPriorityField" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Completion Date (DD/MM/YY)"
+        android:id="@+id/textView3" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:ems="10"
+        android:id="@+id/itemDueDateField"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:id="@+id/saveButton"
+        android:layout_gravity="center_horizontal" />
+
+</LinearLayout>
