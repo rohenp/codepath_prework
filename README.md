@@ -2,7 +2,7 @@
 
 This is an Android demo application for displaying the a TODO list.
 
-Time spent: 3 hours spent in total
+Time spent: ~7 hours spent in total
 
 Completed user stories:
 
@@ -22,6 +22,6 @@ Completed user stories:
 
 Walkthrough of all user stories:
 
-![Video Walkthrough](anim_rotten_tomatoes.gif)
+![Video Walkthrough](walkthrough.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
